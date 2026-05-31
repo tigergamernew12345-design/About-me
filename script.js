@@ -2,11 +2,9 @@
 
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-
-        if(entry.isIntersecting){
+        if (entry.isIntersecting) {
             entry.target.classList.add("show");
         }
-
     });
 });
 
@@ -17,29 +15,48 @@ document.querySelectorAll("section").forEach(section => {
 
 // Typing effect
 
-const text =
-"Welcome to my little corner of the internet.";
+const text = "Welcome to my little corner of the internet.";
 
 let i = 0;
 
 function typeWriter() {
 
-    if(i < text.length){
+    const heroText = document.querySelector(".hero p");
 
-        document.querySelector(".hero p").textContent += text.charAt(i);
+    if (!heroText) return;
 
+    if (i < text.length) {
+        heroText.textContent += text.charAt(i);
         i++;
-
         setTimeout(typeWriter, 50);
+    }
+}
+
+// Loading screen + typing effect
+
+window.addEventListener("load", () => {
+
+    const loader = document.getElementById("loader");
+
+    if (loader) {
+
+        setTimeout(() => {
+
+            loader.style.opacity = "0";
+
+            setTimeout(() => {
+                loader.style.display = "none";
+            }, 800);
+
+        }, 1200);
 
     }
 
-}
+    const heroText = document.querySelector(".hero p");
 
-window.onload = () => {
+    if (heroText) {
+        heroText.textContent = "";
+        typeWriter();
+    }
 
-    document.querySelector(".hero p").textContent = "";
-
-    typeWriter();
-
-};
+});
